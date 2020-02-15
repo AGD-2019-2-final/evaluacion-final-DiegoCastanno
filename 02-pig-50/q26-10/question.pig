@@ -27,3 +27,7 @@ u = LOAD 'data.csv' USING PigStorage(',')
 --
 -- >>> Escriba su respuesta a partir de este punto <<<
 --
+tb = FOREACH u GENERATE firstname AS firstname;
+tb1 = FILTER tb BY firstname MATCHES 'M.*' OR firstname MATCHES 'N.*' OR firstname MATCHES 'O.*' OR firstname MATCHES 'P.*' OR firstname MATCHES 'Q.*' OR firstname MATCHES 'R.*' OR firstname MATCHES 'S.*' OR firstname MATCHES 'T.*' OR firstname MATCHES 'U.*' OR firstname MATCHES 'V.*' OR firstname MATCHES 'W.*' OR firstname MATCHES 'X.*' OR firstname MATCHES 'Y.*' OR firstname MATCHES 'Z.*';
+
+STORE tb1 INTO 'output' USING PigStorage(',');

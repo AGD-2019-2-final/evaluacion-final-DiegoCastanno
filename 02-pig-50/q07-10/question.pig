@@ -12,3 +12,14 @@ fs -rm -f -r output;
 --
 -- >>> Escriba su respuesta a partir de este punto <<<
 --
+u = LOAD 'data.tsv' USING PigStorage('\t') 
+    AS (letter:CHARARRAY, 
+        dicc:BAG{t:(p:CHARARRAY)}, 
+        par:MAP[]);
+
+tb = FOREACH u GENERATE letter, SIZE(dicc), SIZE(par);
+tb1 = ORDER tb BY $0, $1, $2 ASC;
+
+STORE tb1 INTO 'output' USING PigStorage(',');
+
+        

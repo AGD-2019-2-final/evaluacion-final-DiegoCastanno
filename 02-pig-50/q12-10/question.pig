@@ -23,6 +23,7 @@
 -- 
 fs -rm -f -r output;
 --
+
 u = LOAD 'data.csv' USING PigStorage(',') 
     AS (id:int, 
         firstname:CHARARRAY, 
@@ -33,3 +34,8 @@ u = LOAD 'data.csv' USING PigStorage(',')
 --
 -- >>> Escriba su respuesta a partir de este punto <<<
 --
+
+tb = FOREACH u GENERATE surname AS surname;
+tb1 = FILTER tb BY surname MATCHES 'D.*' OR surname MATCHES 'E.*' OR surname MATCHES 'F.*' OR surname MATCHES 'G.*' OR surname MATCHES 'H.*' OR surname MATCHES 'I.*' OR surname MATCHES 'J.*' OR surname MATCHES 'K.*';
+
+STORE tb1 INTO 'output' USING PigStorage(',');

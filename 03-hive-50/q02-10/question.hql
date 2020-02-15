@@ -11,3 +11,17 @@
 -- >>> Escriba su respuesta a partir de este punto <<<
 --
 
+DROP TABLE IF EXISTS data;
+
+CREATE TABLE data(c1    STRING,
+                  C2  DATE,
+                  C3  INT)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t';
+
+LOAD DATA LOCAL INPATH "data.tsv" OVERWRITE INTO TABLE data;
+
+INSERT OVERWRITE LOCAL DIRECTORY 'output'
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+STORED AS TEXTFILE
+
+SELECT * FROM data ORDER BY c1, c3, c2;

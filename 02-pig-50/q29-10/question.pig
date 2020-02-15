@@ -40,3 +40,8 @@ u = LOAD 'data.csv' USING PigStorage(',')
 --
 -- >>> Escriba su respuesta a partir de este punto <<<
 --
+tb = FOREACH u GENERATE $3, SUBSTRING($3,5,7), SUBSTRING($3,5,7);
+tb1 = FOREACH tb GENERATE $0, $1, $2, GetMonth(ToDate($0,'yyyy-MM-dd'));
+tb2 = FOREACH tb1 GENERATE $0, case $1 when '01' then 'ene' when '02' then 'feb' when '03' then 'mar' when '04' then 'abr' when '05' then 'may' when '06' then 'jun' when '07' then 'jul' when '08' then 'ago' when '09' then 'sep' when '10' then 'oct' when '11' then 'nov' else 'dic' end, $2, $3;
+
+STORE tb2 INTO 'output' USING PigStorage(',');

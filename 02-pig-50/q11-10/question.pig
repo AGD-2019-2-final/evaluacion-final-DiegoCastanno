@@ -27,6 +27,9 @@
 -- Escriba el resultado a la carpeta `output` del directorio actual.
 -- 
 fs -rm -f -r output;
+
+--
+-- >>> Escriba su respuesta a partir de este punto <<<
 --
 u = LOAD 'data.csv' USING PigStorage(',') 
     AS (id:int, 
@@ -35,6 +38,8 @@ u = LOAD 'data.csv' USING PigStorage(',')
         birthday:CHARARRAY, 
         color:CHARARRAY, 
         quantity:INT);
---
--- >>> Escriba su respuesta a partir de este punto <<<
---
+ 
+tb = FOREACH u GENERATE $2 AS col1, UPPER($2) AS col2, LOWER($2) AS col3;
+tb = ORDER tb BY $0 ASC;
+
+STORE tb INTO 'output' USING PigStorage(',');
